@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=pgUsername
+      - POSTGRES_PASSWORD=pgPasswordExample123
+      - POSTGRES_DATABASE=pg_db_123
+      - WEBSERVER_PROTOCOL=http
+      - WEBSERVER_HOST=localhost
+      - WEBSERVER_PORT=3000
+      - JWT_SECRET_KEY=geruhojia121d1asdq21r!@!F!@#%$!fkat812i1roi@!FASF
+      - JWT_EXPIRES_IN=1y
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=pgUsername
+      - POSTGRES_PASSWORD=pgPasswordExample123
+      - POSTGRES_DB=pg_db_123
+    volumes:
+      - ./data:/var/lib/postgresql/data

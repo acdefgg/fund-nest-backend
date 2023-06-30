@@ -1,0 +1,23 @@
+INSERT INTO public.accounts(
+	id, 
+    role, 
+    email, 
+    password, 
+    "firstName", 
+    "lastName", 
+    "isConfirmed", 
+    "createdAt", 
+    "updatedAt"
+)
+	VALUES 
+(
+    'd45735b1-27a9-49d9-9fd3-476cec88bd9e',
+    'admin', 
+    'admin@fund.ru',
+    '$2a$10$YkmSfvIDSGNNsI4gyh8BFeTSG47IaZZDc5yc8vZiZ4bXVtoalD1gq',
+    'Администратор',
+    'Системы', 
+    true, 
+    CURRENT_TIMESTAMP, 
+    CURRENT_TIMESTAMP
+);
