@@ -24,8 +24,8 @@ services:
   db:
     image: postgres
     restart: always
-    ports:
-      - "5432:5432"
+    #ports:
+    #  - "5432:5432"
     environment:
       - POSTGRES_USER=pgUsername
       - POSTGRES_PASSWORD=pgPasswordExample123
@@ -40,6 +40,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "7000:7000"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./certbot-etc:/etc/letsencrypt
@@ -48,17 +49,17 @@ services:
       - app
     networks:
       - app-network
-  certbot:
-    image: certbot/certbot
-    restart: always
-    volumes:
-      - ./certbot-var:/var/lib/letsencrypt
-      - ./certbot-etc:/etc/letsencrypt
-      - ./certbot/conf:/etc/letsencrypt/conf
-      - ./certbot/www:/var/www/certbot
-    networks:
-      - app-network
-    entrypoint: "certbot certonly --non-interactive --webroot --webroot-path=/var/www/certbot --email tipoya00@mail.ru --agree-tos --no-eff-email --staging"
+#  certbot:
+#    image: certbot/certbot
+#    restart: always
+#    volumes:
+#      - ./certbot-var:/var/lib/letsencrypt
+#      - ./certbot-etc:/etc/letsencrypt
+#      - ./certbot/conf:/etc/letsencrypt/conf
+#      - ./certbot/www:/var/www/certbot
+#    networks:
+#      - app-network
+#    entrypoint: "certbot certonly --non-interactive --webroot --webroot-path=/var/www/certbot --email tipoya00@mail.ru --agree-tos --no-eff-email --staging"
 
 networks:
   app-network:
