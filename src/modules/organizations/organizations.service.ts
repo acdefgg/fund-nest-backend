@@ -58,7 +58,9 @@ export class OrganizationsService {
    */
   async getCategories() {
     return await this.organizationsModel.findAll({
-      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('category')), 'category']],
+      attributes: [
+        [Sequelize.fn('DISTINCT', Sequelize.col('category')), 'category'],
+      ],
     });
   }
   /**

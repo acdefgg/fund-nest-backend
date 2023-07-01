@@ -4,8 +4,6 @@ services:
   app:
     build: .
     restart: always
-    ports:
-      - '3000:3000'
     depends_on:
       - db
     environment:
@@ -19,15 +17,46 @@ services:
       - WEBSERVER_PORT=3000
       - JWT_SECRET_KEY=geruhojia121d1asdq21r!@!F!@#%$!fkat812i1roi@!FASF
       - JWT_EXPIRES_IN=1y
-
+    networks:
+      - app-network
   db:
     image: postgres
     restart: always
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
       - POSTGRES_USER=pgUsername
       - POSTGRES_PASSWORD=pgPasswordExample123
       - POSTGRES_DB=pg_db_123
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - app
+    networks:
+      - app-network
+  certbot:
+    image: certbot/certbot
+    restart: always
+    volumes:
+      - ./certbot-var:/var/lib/letsencrypt
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot/conf:/etc/letsencrypt/conf
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - app-network
+    entrypoint: "certbot certonly --webroot --webroot-path=/var/www/certbot --email tipoya00@mail.ru --agree-tos --no-eff-email --staging"
+
+networks:
+  app-network:
